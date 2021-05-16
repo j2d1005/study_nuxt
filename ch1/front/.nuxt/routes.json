@@ -14,6 +14,13 @@
     "_name": "_f3bb65b8"
   },
   {
+    "name": "study_memo",
+    "path": "/study_memo",
+    "component": "/Users/sam/Desktop/study/vue/nuxt/stydy_nuxt/ch1/front/pages/study_memo.vue",
+    "chunkName": "pages/study_memo",
+    "_name": "_91606808"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/Users/sam/Desktop/study/vue/nuxt/stydy_nuxt/ch1/front/pages/index.vue",

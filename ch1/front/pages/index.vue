@@ -1,6 +1,6 @@
 <template>
   <div>
-    Hello {{name}}
+    <div>Hello {{ name }}</div>
   </div>
 </template>
 
@@ -10,7 +10,12 @@
       return {
         name: 'Nuxt.js'
       }
-    }
+    },
+    head() {
+      return {
+        title: '메인페이지'
+      }
+    },
   }
 </script>
 
