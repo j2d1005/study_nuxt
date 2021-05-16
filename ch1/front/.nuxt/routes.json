@@ -1,0 +1,23 @@
+[
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "/Users/sam/Desktop/study/vue/nuxt/stydy_nuxt/ch1/front/pages/profile.vue",
+    "chunkName": "pages/profile",
+    "_name": "_0b1f0e66"
+  },
+  {
+    "name": "signup",
+    "path": "/signup",
+    "component": "/Users/sam/Desktop/study/vue/nuxt/stydy_nuxt/ch1/front/pages/signup.vue",
+    "chunkName": "pages/signup",
+    "_name": "_f3bb65b8"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/sam/Desktop/study/vue/nuxt/stydy_nuxt/ch1/front/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_ea6ba314"
+  }
+]
