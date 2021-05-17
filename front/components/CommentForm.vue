@@ -1,32 +1,33 @@
 <template>
-  <v-card style="margin-bottom: 20px">
-    <v-container>
-      <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
-        <v-textarea
-          v-model="content"
-          label="어떤 신기한 일이 있었나요?"
-          outlined
-          auto-grow
-          clearable
-          :hide-details="hideDetails"
-          :success-messages="successMessages"
-          :success="success"
-          :rules="[(v) => !!v.trim() || '내용을 입력하세요.']"
-          @input="onChangeTextarea"
-        />
-
-        <v-btn color="green" type="submit" :disabled="!valid" absolute right
-          >짹짹</v-btn
-        >
-        <v-btn>이미지 업로드</v-btn>
-      </v-form>
-    </v-container>
-  </v-card>
+  <v-form
+    ref="form"
+    v-model="valid"
+    style="position: relative"
+    @submit.prevent="onSubmitForm"
+  >
+    <v-textarea
+      v-model="content"
+      label="댓글"
+      filled
+      auto-grow
+      :success-messages="successMessages"
+      :success="success"
+      :hide-details="hideDetails"
+      @input="onChangeTextarea"
+    />
+    <v-btn type="submit" color="green" dark absolute top right>삐약</v-btn>
+  </v-form>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
+  props: {
+    postId: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       valid: false,
@@ -50,13 +51,12 @@ export default {
     onSubmitForm() {
       if (this.$refs.form.validate()) {
         this.$store
-          .dispatch("posts/add", {
+          .dispatch("posts/addComment", {
             content: this.content,
             User: {
               nickname: this.me.nickname,
             },
-            Comments: [],
-            Images: [],
+            postId: this.postId,
             id: Date.now(),
             createdAt: Date.now(),
           })
@@ -64,9 +64,9 @@ export default {
             this.content = "";
             this.hideDetails = false;
             this.success = true;
-            this.successMessages = "게시글 등록 성공";
+            this.successMessages = "댓글 등록 성공";
           })
-          .catch(() => alert("게시글 등록 실패"));
+          .catch(() => alert("댓글 등록 실패"));
       } else {
         alert("폼이 유효하지 않음!");
       }
