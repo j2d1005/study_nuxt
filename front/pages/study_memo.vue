@@ -59,6 +59,9 @@
         />
       </v-container>
     </v-form>
+
+    <div>{{ name }}</div>
+    <v-btn @click="onClick">바이바이</v-btn>
   </div>
 </template>
 
@@ -91,6 +94,11 @@ export default {
       ],
     };
   },
+  computed: {
+    name() {
+      return this.$store.state.studyStore.name;
+    },
+  },
   methods: {
     onSubmitForm() {
       // this.$refs.form.validate();
@@ -100,6 +108,9 @@ export default {
       } else {
         alert("폼이 유효하지 않음!");
       }
+    },
+    onClick() {
+      this.$store.commit("studyStore/bye");
     },
   },
 };
