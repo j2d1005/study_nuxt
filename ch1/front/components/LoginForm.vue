@@ -1,6 +1,6 @@
 <template>
   <v-container>
-  <!--  v-container은 그냥 패딩 주는 속성  -->
+    <!--  v-container은 그냥 패딩 주는 속성  -->
     <v-card>
       <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
         <v-container>
@@ -19,7 +19,7 @@
             required
           />
           <v-btn color="green" type="submit" :disabled="!valid">로그인</v-btn>
-          <v-btn nuxt to ="signup">회원가입</v-btn>
+          <v-btn nuxt to="signup">회원가입</v-btn>
         </v-container>
       </v-form>
     </v-card>
@@ -31,32 +31,27 @@ export default {
   data() {
     return {
       valid: false,
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       emailRules: [
-        v => !!v || '이메일은 필수입니다.',
-        v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
+        (v) => !!v || "이메일은 필수입니다.",
+        (v) => /.+@.+/.test(v) || "이메일이 유효하지 않습니다.",
       ],
-      passwordRules: [
-        v => !!v || '비밀번호는 필수입니다.',
-      ],
-    }
+      passwordRules: [(v) => !!v || "비밀번호는 필수입니다."],
+    };
   },
   methods: {
     onSubmitForm() {
       // this.$refs.form.validate();
       // console.log(this.valid)
       if (this.$refs.form.validate()) {
-        alert('submit~~');
+        alert("submit~~");
       } else {
-        alert('폼이 유효하지 않음!');
+        alert("폼이 유효하지 않음!");
       }
-    }
+    },
   },
-
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

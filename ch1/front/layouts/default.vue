@@ -1,14 +1,14 @@
 <template>
-<!--  <div>-->
-<!--    <div>-->
-<!--      <nuxt-link to="/">Home</nuxt-link>-->
-<!--      <nuxt-link to="/profile">Profile</nuxt-link>-->
-<!--      <nuxt-link to="/signup">SignUp</nuxt-link>-->
-<!--    </div>-->
-<!--    &lt;!&ndash; nuxt-link태그는 vue의 router-link태그와 같다.  &ndash;&gt;-->
-<!--    &lt;!&ndash; nuxt태그는 vue의 router-view태그와 같다.  &ndash;&gt;-->
-<!--    <nuxt />-->
-<!--  </div>-->
+  <!--  <div>-->
+  <!--    <div>-->
+  <!--      <nuxt-link to="/">Home</nuxt-link>-->
+  <!--      <nuxt-link to="/profile">Profile</nuxt-link>-->
+  <!--      <nuxt-link to="/signup">SignUp</nuxt-link>-->
+  <!--    </div>-->
+  <!--    &lt;!&ndash; nuxt-link태그는 vue의 router-link태그와 같다.  &ndash;&gt;-->
+  <!--    &lt;!&ndash; nuxt태그는 vue의 router-view태그와 같다.  &ndash;&gt;-->
+  <!--    <nuxt />-->
+  <!--  </div>-->
   <v-app>
     <nav>
       <v-toolbar dark color="green">
@@ -17,7 +17,12 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-text-field label="검색" hide-details prepend-icon="mdi-magnify" :style="{ display: 'flex', alignItems: 'center' }" />
+          <v-text-field
+            label="검색"
+            hide-details
+            prepend-icon="mdi-magnify"
+            :style="{ display: 'flex', alignItems: 'center' }"
+          />
           <v-btn text nuxt to="/profile">
             <div>프로필</div>
           </v-btn>
@@ -39,24 +44,24 @@
 </template>
 
 <script>
-  import LoginForm from '~/components/LoginForm';
+import LoginForm from "~/components/LoginForm";
 
-  export default {
-    components: {
-      LoginForm,
-    },
-    head() {
-      return {
-        title: 'NodeBird'
-      };
-    }
-  }
+export default {
+  components: {
+    LoginForm,
+  },
+  head() {
+    return {
+      title: "NodeBird",
+    };
+  },
+};
 </script>
 
 <style>
-  a {
-    display: inline-block;
-    text-decoration: none;
-    color: inherit;
-  }
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
 </style>

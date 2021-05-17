@@ -26,7 +26,12 @@
 
     <!--  v-text-field은 단순 인풋/// prepend-icon속성으로 아이콘을 줄 수 있는데  -->
     <!--  mdi-~~~~는 머터리얼디자인아이콘을 의미한다. vuetify에서는 머터리얼디자인아이콘, 머터리얼아이콘 등 거의 다 지원하기 떔에 저렇게 구분한다.  -->
-    <v-text-field label="검색" hide-details prepend-icon="mdi-magnify" :style="{ display: 'flex', alignItems: 'center' }" />
+    <v-text-field
+      label="검색"
+      hide-details
+      prepend-icon="mdi-magnify"
+      :style="{ display: 'flex', alignItems: 'center' }"
+    />
 
     <!-- vuetify에서 제공하는 기능 v-form의 v-model -->
     <!--  v-form안에 있는 텍스트필드들이 rules 통과하면 자동으로 v-form에 연결한 valid가 true가 되면서 submit이 가능해진다.  -->
@@ -54,53 +59,50 @@
         />
       </v-container>
     </v-form>
-
   </div>
 </template>
 
 <script>
-  // ~/ 경로는 root를 가리킴
-  import LoginForm from '~/components/LoginForm';
+// ~/ 경로는 root를 가리킴
+// import LoginForm from "~/components/LoginForm";
 
-  export default {
-    // layout과 head는 nuxt에서 추가한 기능
+export default {
+  // layout과 head는 nuxt에서 추가한 기능
 
-    layout: "admin", // default 레이아웃 말고 다른 레이아웃 가져오는 경우
+  layout: "admin", // default 레이아웃 말고 다른 레이아웃 가져오는 경우
 
-    head() {
-      // html의 head에 해당하는 내용을 추가할 수 있다.
-      // 각 페이지에서 head를 선언하지 않으면 layout의 head를 따라간다.
-      // 레이아웃간 공통된 내용은 루트의 nuxt.config.js 파일에 선언한다.
-      return {
-        title: 'NodeBird'
-      };
-    },
-    data() {
-      return {
-        valid: false,
-        email: '',
-        password: '',
-        passwordCheck: '',
-        emailRules: [
-          v => !!v || '이메일은 필수입니다.',
-          v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
-        ],
+  head() {
+    // html의 head에 해당하는 내용을 추가할 수 있다.
+    // 각 페이지에서 head를 선언하지 않으면 layout의 head를 따라간다.
+    // 레이아웃간 공통된 내용은 루트의 nuxt.config.js 파일에 선언한다.
+    return {
+      title: "NodeBird",
+    };
+  },
+  data() {
+    return {
+      valid: false,
+      email: "",
+      password: "",
+      passwordCheck: "",
+      emailRules: [
+        (v) => !!v || "이메일은 필수입니다.",
+        (v) => /.+@.+/.test(v) || "이메일이 유효하지 않습니다.",
+      ],
+    };
+  },
+  methods: {
+    onSubmitForm() {
+      // this.$refs.form.validate();
+      // console.log(this.valid)
+      if (this.$refs.form.validate()) {
+        alert("submit~~");
+      } else {
+        alert("폼이 유효하지 않음!");
       }
     },
-    methods: {
-      onSubmitForm() {
-        // this.$refs.form.validate();
-        // console.log(this.valid)
-        if (this.$refs.form.validate()) {
-          alert('submit~~');
-        } else {
-          alert('폼이 유효하지 않음!');
-        }
-      }
-    },
-  }
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -9,25 +9,23 @@
 </template>
 
 <script>
-  import PostCard from "~/components/PostCard";
+import PostCard from "~/components/PostCard";
 
-  export default {
-    components: {
-      PostCard,
-    },
-    data() {
-      return {
-        name: 'Nuxt.js'
-      }
-    },
-    head() {
-      return {
-        title: '메인페이지'
-      }
-    },
-  }
+export default {
+  components: {
+    PostCard,
+  },
+  data() {
+    return {
+      name: "Nuxt.js",
+    };
+  },
+  head() {
+    return {
+      title: "메인페이지",
+    };
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
