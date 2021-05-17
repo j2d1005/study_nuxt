@@ -10,7 +10,7 @@
 
 # production
 # /build
-/.next
+/.nuxt
 
 # misc
 .DS_Store
@@ -26,3 +26,4 @@ yarn-error.log*
 .idea
 
 **/node_modules
+**/.nuxt
