@@ -75,10 +75,14 @@ export default {
   },
   methods: {
     onSubmitForm() {
-      // this.$refs.form.validate();
-      // console.log(this.valid)
       if (this.$refs.form.validate()) {
-        alert("submit~~");
+        this.$store
+          .dispatch("users/singUp", {
+            email: this.email,
+            nickname: this.nickname,
+          })
+          .then(() => this.$router.push("/"))
+          .catch(() => alert("로그인 실패"));
       } else {
         alert("폼이 유효하지 않음!");
       }

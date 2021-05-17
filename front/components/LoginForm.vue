@@ -1,7 +1,8 @@
 <template>
+  <!--  v-container은 그냥 패딩 주는 속성  -->
   <v-container>
-    <!--  v-container은 그냥 패딩 주는 속성  -->
-    <v-card>
+    <!-- 로그인 전 -->
+    <v-card v-if="!me">
       <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
         <v-container>
           <v-text-field
@@ -23,6 +24,12 @@
         </v-container>
       </v-form>
     </v-card>
+
+    <!-- 로그인 완료 -->
+    <v-card v-else>
+      {{ me.nickname }}님 로그인 되었습니다.
+      <v-btn @click="onLogout">로그아웃</v-btn>
+    </v-card>
   </v-container>
 </template>
 
@@ -40,15 +47,26 @@ export default {
       passwordRules: [(v) => !!v || "비밀번호는 필수입니다."],
     };
   },
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    },
+  },
   methods: {
     onSubmitForm() {
       // this.$refs.form.validate();
       // console.log(this.valid)
       if (this.$refs.form.validate()) {
-        alert("submit~~");
+        this.$store.dispatch("users/logIn", {
+          email: this.email,
+          nickname: "더미닉네임",
+        });
       } else {
         alert("폼이 유효하지 않음!");
       }
+    },
+    onLogout() {
+      this.$store.dispatch("users/logOut");
     },
   },
 };

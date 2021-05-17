@@ -1,14 +1,4 @@
 <template>
-  <!--  <div>-->
-  <!--    <div>-->
-  <!--      <nuxt-link to="/">Home</nuxt-link>-->
-  <!--      <nuxt-link to="/profile">Profile</nuxt-link>-->
-  <!--      <nuxt-link to="/signup">SignUp</nuxt-link>-->
-  <!--    </div>-->
-  <!--    &lt;!&ndash; nuxt-link태그는 vue의 router-link태그와 같다.  &ndash;&gt;-->
-  <!--    &lt;!&ndash; nuxt태그는 vue의 router-view태그와 같다.  &ndash;&gt;-->
-  <!--    <nuxt />-->
-  <!--  </div>-->
   <v-app>
     <nav>
       <v-toolbar dark color="green">
