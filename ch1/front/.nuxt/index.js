@@ -12,6 +12,9 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 /* Plugins */
 
+import nuxt_plugin_plugin_850e4648 from 'nuxt_plugin_plugin_850e4648' // Source: ./vuetify/plugin.js (mode: 'all')
+import nuxt_plugin_axios_7acba330 from 'nuxt_plugin_axios_7acba330' // Source: ./axios.js (mode: 'all')
+
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
 
@@ -60,7 +63,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"title":"NodeBird","meta":[],"link":[],"style":[],"script":[]},
+    head: {"title":"NodeBird","meta":[],"link":[{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
 
     router,
     nuxt: {
@@ -173,6 +176,14 @@ async function createApp(ssrContext, config = {}) {
     }
   }
   // Plugin execution
+
+  if (typeof nuxt_plugin_plugin_850e4648 === 'function') {
+    await nuxt_plugin_plugin_850e4648(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_axios_7acba330 === 'function') {
+    await nuxt_plugin_axios_7acba330(app.context, inject)
+  }
 
   // Lock enablePreview in context
   if (process.static && process.client) {
