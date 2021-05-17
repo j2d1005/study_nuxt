@@ -27,8 +27,10 @@
 
     <!-- 로그인 완료 -->
     <v-card v-else>
-      {{ me.nickname }}님 로그인 되었습니다.
-      <v-btn @click="onLogout">로그아웃</v-btn>
+      <v-container>
+        {{ me.nickname }}님 로그인 되었습니다.
+        <v-btn @click="onLogout" style="display: block">로그아웃</v-btn>
+      </v-container>
     </v-card>
   </v-container>
 </template>
