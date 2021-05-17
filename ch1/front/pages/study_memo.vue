@@ -28,6 +28,33 @@
     <!--  mdi-~~~~는 머터리얼디자인아이콘을 의미한다. vuetify에서는 머터리얼디자인아이콘, 머터리얼아이콘 등 거의 다 지원하기 떔에 저렇게 구분한다.  -->
     <v-text-field label="검색" hide-details prepend-icon="mdi-magnify" :style="{ display: 'flex', alignItems: 'center' }" />
 
+    <!-- vuetify에서 제공하는 기능 v-form의 v-model -->
+    <!--  v-form안에 있는 텍스트필드들이 rules 통과하면 자동으로 v-form에 연결한 valid가 true가 되면서 submit이 가능해진다.  -->
+    <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
+      <v-container>
+        <v-text-field
+          v-model="email"
+          label="이메일"
+          type="emial"
+          :rules="emailRules"
+          required
+        />
+        <!-- vuetify에서 제공하는 유효성 검사 속성 rules -->
+        <v-text-field
+          v-model="password"
+          label="비밀번호"
+          type="password"
+          required
+        />
+        <v-text-field
+          v-model="passwordCheck"
+          label="비밀번호 확인"
+          type="password"
+          required
+        />
+      </v-container>
+    </v-form>
+
   </div>
 </template>
 
@@ -47,7 +74,30 @@
       return {
         title: 'NodeBird'
       };
-    }
+    },
+    data() {
+      return {
+        valid: false,
+        email: '',
+        password: '',
+        passwordCheck: '',
+        emailRules: [
+          v => !!v || '이메일은 필수입니다.',
+          v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
+        ],
+      }
+    },
+    methods: {
+      onSubmitForm() {
+        // this.$refs.form.validate();
+        // console.log(this.valid)
+        if (this.$refs.form.validate()) {
+          alert('submit~~');
+        } else {
+          alert('폼이 유효하지 않음!');
+        }
+      }
+    },
   }
 </script>
 
