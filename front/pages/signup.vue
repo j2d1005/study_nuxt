@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -73,6 +74,9 @@ export default {
       termsRules: [(v) => !!v || "약관에 동의해야 합니다."],
     };
   },
+  computed: {
+    ...mapState("users", ["me"]),
+  },
   methods: {
     onSubmitForm() {
       if (this.$refs.form.validate()) {
@@ -88,11 +92,19 @@ export default {
       }
     },
   },
+  watch: {
+    me(newValue) {
+      if (newValue) {
+        this.$router.push("/");
+      }
+    },
+  },
   head() {
     return {
       title: "회원가입",
     };
   },
+  middleware: "anonymous",
 };
 </script>
 
