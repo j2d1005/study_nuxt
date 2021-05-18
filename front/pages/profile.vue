@@ -19,14 +19,14 @@
       <v-card style="margin-bottom: 20px">
         <v-container>
           <v-subheader>팔로워</v-subheader>
-          <follow-list />
+          <follow-list :lists="followerList" :remove="onRemoveFollower" />
         </v-container>
       </v-card>
 
       <v-card style="margin-bottom: 20px">
         <v-container>
           <v-subheader>팔로잉</v-subheader>
-          <follow-list />
+          <follow-list :lists="followingList" :remove="onRemoveFollowing" />
         </v-container>
       </v-card>
     </v-container>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import FollowList from "~/components/FollowList";
 
 export default {
@@ -48,13 +48,20 @@ export default {
     };
   },
   computed: {
-    ...mapState("users", ["me"]),
+    ...mapState("users", ["me", "followingList", "followerList"]),
   },
   methods: {
     onChangeNickname() {
       this.$store.dispatch("users/changeNickname", {
         nickname: this.nickname,
       });
+    },
+    ...mapActions("users", ["removeFollowerList", "removeFollowingList"]),
+    onRemoveFollower(id) {
+      this.removeFollowerList({ id });
+    },
+    onRemoveFollowing(id) {
+      this.removeFollowingList({ id });
     },
   },
   head() {
