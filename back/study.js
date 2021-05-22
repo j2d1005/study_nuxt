@@ -15,3 +15,13 @@ app.listen(3085, () => {
 
 // http의 기본 포트는 80
 // https의 기본 포트는 443
+
+
+
+
+// sequelize, mysql2 설치
+// sequelize를 사용해서 DB(mysql, msql, mariaDB 등 )종류에 상관없이 자바스크립트로 표현이 가능하다 ?
+// mysql2는 DB설치랑은 다르다. node와 mysql을 연결해주는 드라이버 역할
+
+// sequelize-cli 를 -D로 설치 후 npx sequelize init 명령어를 실행하면
+// config, migrations, models, seeders 폴더가 셋팅됨
