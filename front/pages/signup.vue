@@ -84,6 +84,7 @@ export default {
           .dispatch("users/singUp", {
             email: this.email,
             nickname: this.nickname,
+            password: this.password,
           })
           .then(() => this.$router.push("/"))
           .catch(() => alert("로그인 실패"));

@@ -40,7 +40,6 @@ export const mutations = {
     state.followerList.splice(index, 1);
   },
   loadFollowerList(state) {
-    console.log("afasfasf");
     const diff = totalFollowers - state.followerList.length;
     const fakeList = Array(diff > limit ? limit : diff)
       .fill()
@@ -66,6 +65,12 @@ export const mutations = {
 
 export const actions = {
   singUp({ commit }, payload) {
+    this.$axios.post("/api/user", {
+      email: payload.email,
+      nickname: payload.nickname,
+      password: payload.password,
+    });
+
     // 서버에 회원가입 요청을 보내는 부분
     // 가입과 동시에 로그인을 하려고 state.me를 셋팅
     commit("setMe", payload);
