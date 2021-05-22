@@ -1,16 +1,22 @@
 export const state = () => ({
   me: null, // me에 객체가 들어오면 로그인이 된 상태
   followingList: [
-    { id: 1, nickname: "HONGSAM1" },
-    { id: 2, nickname: "HONGSAM2" },
-    { id: 3, nickname: "HONGSAM3" },
+    // { id: 1, nickname: "HONGSAM1" },
+    // { id: 2, nickname: "HONGSAM2" },
+    // { id: 3, nickname: "HONGSAM3" },
   ],
   followerList: [
-    { id: 1, nickname: "HONGSAM1" },
-    { id: 2, nickname: "HONGSAM2" },
-    { id: 3, nickname: "HONGSAM3" },
+    // { id: 1, nickname: "HONGSAM1" },
+    // { id: 2, nickname: "HONGSAM2" },
+    // { id: 3, nickname: "HONGSAM3" },
   ],
+  hasMoreFollower: true,
+  hasMoreFollowing: true,
 });
+
+const totalFollowers = 8;
+const totalFollowings = 8;
+const limit = 3;
 
 export const mutations = {
   setMe(state, payload) {
@@ -32,6 +38,29 @@ export const mutations = {
   removeFollowerList(state, payload) {
     const index = state.followerList.findIndex((v) => v.id === payload.id);
     state.followerList.splice(index, 1);
+  },
+  loadFollowerList(state) {
+    console.log("afasfasf");
+    const diff = totalFollowers - state.followerList.length;
+    const fakeList = Array(diff > limit ? limit : diff)
+      .fill()
+      .map(() => ({
+        id: Math.random().toString(),
+        nickname: Math.floor(Math.random() * 1000),
+      }));
+    state.followerList = state.followerList.concat(fakeList);
+    state.hasMoreFollower = fakeList.length === limit;
+  },
+  loadFollowingList(state) {
+    const diff = totalFollowings - state.followingList.length;
+    const fakeList = Array(diff > limit ? limit : diff)
+      .fill()
+      .map(() => ({
+        id: Math.random().toString(),
+        nickname: Math.floor(Math.random() * 1000),
+      }));
+    state.followingList = state.followingList.concat(fakeList);
+    state.hasMoreFollowing = fakeList.length === limit;
   },
 };
 
@@ -61,5 +90,15 @@ export const actions = {
   },
   removeFollowerList({ commit }, payload) {
     commit("removeFollowerList", payload);
+  },
+  loadFollowerList({ commit, state }) {
+    if (state.hasMoreFollower) {
+      commit("loadFollowerList");
+    }
+  },
+  loadFollowingList({ commit, state }) {
+    if (state.hasMoreFollowing) {
+      commit("loadFollowingList");
+    }
   },
 };
