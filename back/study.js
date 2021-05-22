@@ -40,3 +40,8 @@ app.post('/user', (req, res) => {
 
 // nodemon 설치후 npm script를 node => nodemon으로 바꿔준다.
 // 그러면 서버를 껏다 켜지 않아도 새로고침하면 수정사항이 반영된다.
+
+// db 설정하고
+// npx sequelize db:create 터미널에 입력해야 config에서 설정한 db가 생성된다.
+
+// 서버 켜기 전에 mysql 항상 실행한 상태여야 한다.
