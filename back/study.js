@@ -25,3 +25,7 @@ app.listen(3085, () => {
 
 // sequelize-cli 를 -D로 설치 후 npx sequelize init 명령어를 실행하면
 // config, migrations, models, seeders 폴더가 셋팅됨
+
+
+// nodemon 설치후 npm script를 node => nodemon으로 바꿔준다.
+// 그러면 서버를 껏다 켜지 않아도 새로고침하면 수정사항이 반영된다.
