@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       //createdAt, updatedAt, id 는 자동으로 생성해준다.
     },
     nickname: {
-      type: DataTypes.STRING(20), // 40자 이내
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     password: {
