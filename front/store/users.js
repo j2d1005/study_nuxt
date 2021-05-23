@@ -65,7 +65,7 @@ export const mutations = {
 
 export const actions = {
   singUp({ commit }, payload) {
-    this.$axios.post("/api/user", {
+    this.$axios.post("http://localhost:3085/user", {
       email: payload.email,
       nickname: payload.nickname,
       password: payload.password,
