@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING(40), // 40자 이내
       allowNull: false, // 필수
+      unique: true // 중복금지! models에서 코드로 못잡아내는 경우 db에서도 자동으로 중복을 잡아준다.
       //createdAt, updatedAt, id 는 자동으로 생성해준다.
     },
     nickname: {
