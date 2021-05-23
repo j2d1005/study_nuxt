@@ -12,11 +12,11 @@ module.exports = {
   ],
   vuetify: {},
 
-  axios: {
-    proxy: true,
-  },
-
-  proxy: {
-    "/api/": "http://localhost:3085/",
-  },
+  // axios: {
+  //   proxy: true,
+  // },
+  //
+  // proxy: {
+  //   "/api/": "http://localhost:3085/",
+  // },
 };
