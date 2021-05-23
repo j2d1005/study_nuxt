@@ -40,7 +40,9 @@ app.post('/user', async (req, res, next) => {
     const hash = await bcrypt.hash(req.body.password, 12); // 숫자를 높일 수록 암호화 단계가 올라가지만 느려진다.
     const exUser = await db.User.findOne({
       // db.User에 req.body.email과 같은 email이 있으면 exUser에 담긴다.
-      email: req.body.email,
+      where: { // db찾을 때 조건은 where안에다가 넣어줘야 함
+        email: req.body.email,
+      }
     });
 
     // 이미 회원가입이 되어 있는 경우!
@@ -70,11 +72,46 @@ app.post('/user', async (req, res, next) => {
 
 // 로그인
 app.post('/user/login', async (req, res, next) => {
-  // req.body.email,
-  // req.body.password,
   // 로그인 - 사용자가 email, password로 로그인을 시도하고 db에서 매칭이 되면 백에서 프론트로 cookie에 로그인한 사용자의 쿠키와 정보를 담아서 보내준다. 그럼 프론트에서 로그인 후에 항상 쿠키를 들고 있을 것이고 앞으로 모든 요청에 해당 쿠키를 같이 백에다가 보내면 백에서는 그 쿠키를 기반으로 현재 로그인한 유저가 누군지 판별이 가능하다.
   // 로그인 과정 - email, password의 검증. db.User.fineOne(~~). 검증 통과하면 session에다가 쿠키와 유저 정보를 저장하고 프론트에 쿠키를 내려보내준다.
   // 이것들을 해주는 것이 passport
+
+  // 'local'을 넣어주면 localStrategy가 실행됨.
+  // 설정한 passport/local.js의 localStrategy 를 직접 실행시켜주어야 한다.
+  passport.authenticate('local', (err, user, info) => {
+    // err, user, info는 localStrategy 의 done함수의 매개변수의 값.(에러, 성공, 실패)
+    if (err) { // 에러
+      console.log(err);
+      return next(err);
+    }
+    if (info) { // 실패
+      return res.status(401).send(info.reason);
+    }
+
+    // 성공 시
+    // req.login 은 미들웨어 passport.initialize()에서 넣어준 것이다.
+    return req.login(user, async (err) => {
+      // --> 세션에 사용자 정보를 저장
+      // 쿠키도 프론트에 req.login이 자동으로 내려주기 때문에 따로 처리할 필요 없다.
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      return res.json(user);
+    });
+  })(req, res, next);
+
+  // passport를 사용한 로그인 과정 정리
+  // 1. 프론트에서 '/user/login' 에 이메일과 비밀번호를 담아서 post 요청
+  // 2. app.use(express.json());
+  //    app.use(express.urlencoded({ extended: false }));
+  //    로 인해서 json, formdata가 해석이 되어 req.body에 이메일과 패스워드가 담긴다.
+  // 3. passport.authenticate('local',) 함수로 req.body내용을 passport/local.js의 LocalStrategy에 보낸다.
+  // 4. passport/local.js에서 셋팅한 LocalStrategy에서 로그인 검증을 진행한다.
+  // 5. 성공하면 passport.authenticate('local', () => {})의 콜백함수 부분으로 돌아온다.
+  // 6. 에러, 실패가 아니라면 app.use(passport.initialize());로 생성된 req.login이 실행된다.
+  // 7. req.login이 세션에 사용자 정보를 저장하고 프론트에 쿠키를 내려준다. 쿠키는 헤더에 포함되어 있다. passport/index.js의 passport.serializeUser도 실행된다.
+  // 8. 바디에 사용자 정보를 같이 보내준다.
 });
 
 
