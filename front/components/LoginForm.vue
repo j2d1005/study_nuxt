@@ -61,7 +61,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.$store.dispatch("users/logIn", {
           email: this.email,
-          nickname: "더미닉네임",
+          password: this.password,
         });
       } else {
         alert("폼이 유효하지 않음!");

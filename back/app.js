@@ -17,7 +17,10 @@ passportConfig();
 
 // app.use에 들어가는 것은 미들웨어이고 미들웨어들은 요청과 응답에 관여한다.
 app.use(morgan('dev')); // 제일 위에 선언해줘야함. 콘솔에 요청에 대해 기록해주는 역할
-app.use(cors("http://localhost:3000")); // (괄호 비워두면 모든 요청 허용. *절대 금지*)
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+})); // (괄호 비워두면 모든 요청 허용. *절대 금지*)
 app.use(express.json()); // 이걸 추가해줘야 json형식의 데이터가 들어오면 해석해서 req.body에 넣어준다.
 app.use(express.urlencoded({ extended: false })); // 폼에서 데이터를 전송할 떄 폼 안의 내용들을 해석해서 req.body에 넣어준다.
 app.use(cookie('cookieSecret')); // session설치하면서 cookie를 해석해주는 cooke-parser도 설치해줘야 한다.
@@ -25,6 +28,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'cookieSecret', // 쿠키 암호화를 해제할 수 있는 키. 필수값
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
 })); // passport.session() 을 사용하려면 express-session을 설치하고 먼저 선언해줘야 한다.
 app.use(passport.initialize()); // 요청에 로그인, 로그아웃 기능을 만들어준다.
 app.use(passport.session()); // 메모리의 개념 / 사용자의 정보를 기록할 수 있는 세션을 만들어줌
@@ -56,14 +63,30 @@ app.post('/user', async (req, res, next) => {
       //상황에 맞게 선택하여 사용 / 애매하면 400, 401, 403 중에 선택한대
     }
 
-    const newUser = await db.User.create({
+    await db.User.create({
       email: req.body.email,
       password: hash,
       nickname: req.body.nickname,
     });
-    // 요청을 받고
-    // status 200 = 성공 / 201 = 성공적으로 생성됨
-    return res.status(201).json(newUser); // 응답을 보낸다.
+    // db에 회원가입 요청온 데이터를 담고 바로 login 실행
+    passport.authenticate('local', (err, user, info) => {
+      if (err) { // 에러
+        console.log(err);
+        return next(err);
+      }
+      if (info) { // 실패
+        return res.status(401).send(info.reason);
+      }
+
+      // 성공 시
+      return req.login(user, async (err) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        return res.json(user);
+      });
+    })(req, res, next);
   } catch (err) {
     console.log(err);
     return next(err);
@@ -112,6 +135,13 @@ app.post('/user/login', async (req, res, next) => {
   // 6. 에러, 실패가 아니라면 app.use(passport.initialize());로 생성된 req.login이 실행된다.
   // 7. req.login이 세션에 사용자 정보를 저장하고 프론트에 쿠키를 내려준다. 쿠키는 헤더에 포함되어 있다. passport/index.js의 passport.serializeUser도 실행된다.
   // 8. 바디에 사용자 정보를 같이 보내준다.
+});
+
+// 로그인 후 동작 예제
+app.post('/asdf', (req, res) => {
+  if (req.isAuthenticated()) {
+    // 로그인 후에는 항상 매 요청마다 passport/index.js의 디시리얼라이즈가 실행되어서 로그인이 완료되어 있으면 req.isAuthenticated()가 true가 된다. 이걸로 로그인 여부를 판별한다.
+  }
 });
 
 

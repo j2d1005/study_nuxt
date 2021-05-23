@@ -65,18 +65,44 @@ export const mutations = {
 
 export const actions = {
   singUp({ commit }, payload) {
-    this.$axios.post("http://localhost:3085/user", {
-      email: payload.email,
-      nickname: payload.nickname,
-      password: payload.password,
-    });
-
-    // 서버에 회원가입 요청을 보내는 부분
-    // 가입과 동시에 로그인을 하려고 state.me를 셋팅
-    commit("setMe", payload);
+    this.$axios
+      .post("http://localhost:3085/user", {
+        email: payload.email,
+        nickname: payload.nickname,
+        password: payload.password,
+      })
+      .then((res) => {
+        // 서버에 회원가입 요청을 보내는 부분
+        // 가입과 동시에 로그인을 하려고 state.me를 셋팅
+        console.log(res.data);
+        commit("setMe", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   logIn({ commit }, payload) {
-    commit("setMe", payload);
+    this.$axios
+      .post(
+        "http://localhost:3085/user/login",
+        {
+          email: payload.email,
+          password: payload.password,
+        },
+        {
+          withCredentials: true,
+          // 도메인이 달라서 httponly때문에 쿠기 저장이 안될 때 설정
+          // 백엔드에서도 session 미들웨어에서 cookie옵션 설정해야 하
+          // cors 미들웨어에서도 Credentials 설정을 해야함
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        commit("setMe", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   logOut({ commit }) {
     commit("setMe", null);
