@@ -19,7 +19,7 @@ passportConfig();
 app.use(morgan('dev')); // 제일 위에 선언해줘야함. 콘솔에 요청에 대해 기록해주는 역할
 app.use(cors({
   origin: 'http://localhost:3000',
-  credentials: true,
+  credentials: true, // 프론트에서 요청 보낼 때 credentials 설정 하면 여기서도 해줘야 함.
 })); // (괄호 비워두면 모든 요청 허용. *절대 금지*)
 app.use(express.json()); // 이걸 추가해줘야 json형식의 데이터가 들어오면 해석해서 req.body에 넣어준다.
 app.use(express.urlencoded({ extended: false })); // 폼에서 데이터를 전송할 떄 폼 안의 내용들을 해석해서 req.body에 넣어준다.
@@ -28,7 +28,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'cookieSecret', // 쿠키 암호화를 해제할 수 있는 키. 필수값
-  cookie: {
+  cookie: { // 도메인이 달라서 httponly때문에 쿠기 저장이 안될 때 설정 프론트, 백 둘다 설정해야함 // 프론트는 요청할때 config에다가 설정해서 보낸다.
     httpOnly: true,
     secure: false,
   },
